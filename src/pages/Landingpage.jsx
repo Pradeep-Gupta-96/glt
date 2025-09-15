@@ -636,9 +636,9 @@ const Landingpage = () => {
                                             className="wp-block-buttons is-content-justification-left is-layout-flex wp-container-core-buttons-is-layout-3535db69 wp-block-buttons-is-layout-flex"
                                             style={{ marginTop: "var(--wp--preset--spacing--30)" }}
                                         >
-                                            <div className="wp-block-button">
+                                            <div className="wp-block-button has-tertiary-background-color">
                                                 <Link
-                                                    className="wp-block-button__link wp-element-button"
+                                                    className="wp-block-button__link wp-element-button has-tertiary-background-color"
                                                     to="/about"
                                                 >
                                                     Apply Now
@@ -704,7 +704,7 @@ const Landingpage = () => {
                             </div>
                         </div>
                         <div
-                            className="wp-block-group alignfull has-tertiary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-7276a2bb wp-block-group-is-layout-constrained"
+                            className="wp-block-group alignfull has-secondary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-7276a2bb wp-block-group-is-layout-constrained"
                             id="services"
                             style={{
                                 marginTop: 0,
@@ -1186,12 +1186,12 @@ const Landingpage = () => {
                                                 <button
                                                     type="submit"
                                                     data-brand="new"
-                                                    className="vform-main-submit"
+                                                    className="vform-main-submit has-tertiary-background-color"
                                                     value="Submit"
                                                     fdprocessedid="ljq4wi"
                                                     style={{
-                                                        backgroundColor: "rgb(6, 106, 171)",
-                                                        color: "rgb(255, 255, 255)",
+                                                        // backgroundColor: "rgb(6, 106, 171)",
+                                                        color: "#000000",
                                                         width: 100,
                                                         height: 50,
                                                         borderRadius: 8
@@ -1390,7 +1390,7 @@ const Landingpage = () => {
                             </p>
                         </div>
                         <div
-                            className="wp-block-group alignfull has-tertiary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-c03f3b2a wp-block-group-is-layout-constrained"
+                            className="wp-block-group alignfull has-secondary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-c03f3b2a wp-block-group-is-layout-constrained"
                             style={{
                                 paddingTop: "var(--wp--preset--spacing--60)",
                                 paddingRight: "var(--wp--preset--spacing--30)",
@@ -1439,7 +1439,7 @@ const Landingpage = () => {
                                         >
                                             <div className="wp-block-button">
                                                 <Link
-                                                    className="wp-block-button__link wp-element-button"
+                                                    className="wp-block-button__link wp-element-button has-tertiary-background-color"
                                                     to="/service"
                                                 >
                                                     Apply Now
@@ -1491,7 +1491,7 @@ const Landingpage = () => {
                             <div className="wp-block-columns alignwide is-layout-flex wp-container-core-columns-is-layout-28f84493 wp-block-columns-is-layout-flex">
                                 <div className="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
                                     <div
-                                        className="wp-block-group has-tertiary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-a35945ca wp-block-group-is-layout-constrained"
+                                        className="wp-block-group has-secondary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-a35945ca wp-block-group-is-layout-constrained"
                                         style={{
                                             borderRadius: 4,
                                             paddingTop: "var(--wp--preset--spacing--30)",
@@ -1543,7 +1543,7 @@ const Landingpage = () => {
                                 </div>
                                 <div className="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
                                     <div
-                                        className="wp-block-group has-tertiary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-a35945ca wp-block-group-is-layout-constrained"
+                                        className="wp-block-group has-secondary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-a35945ca wp-block-group-is-layout-constrained"
                                         style={{
                                             borderRadius: 4,
                                             paddingTop: "var(--wp--preset--spacing--30)",
@@ -1595,7 +1595,7 @@ const Landingpage = () => {
                                 </div>
                                 <div className="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
                                     <div
-                                        className="wp-block-group has-tertiary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-a35945ca wp-block-group-is-layout-constrained"
+                                        className="wp-block-group has-secondary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-a35945ca wp-block-group-is-layout-constrained"
                                         style={{
                                             borderRadius: 4,
                                             paddingTop: "var(--wp--preset--spacing--30)",
@@ -1643,7 +1643,7 @@ const Landingpage = () => {
                             <div className="wp-block-columns alignwide is-layout-flex wp-container-core-columns-is-layout-28f84493 wp-block-columns-is-layout-flex">
                                 <div className="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
                                     <div
-                                        className="wp-block-group has-tertiary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-a35945ca wp-block-group-is-layout-constrained"
+                                        className="wp-block-group has-secondary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-a35945ca wp-block-group-is-layout-constrained"
                                         style={{
                                             borderRadius: 4,
                                             paddingTop: "var(--wp--preset--spacing--30)",
@@ -1696,7 +1696,7 @@ const Landingpage = () => {
                                 </div>
                                 <div className="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
                                     <div
-                                        className="wp-block-group has-tertiary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-a35945ca wp-block-group-is-layout-constrained"
+                                        className="wp-block-group has-secondary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-a35945ca wp-block-group-is-layout-constrained"
                                         style={{
                                             borderRadius: 4,
                                             paddingTop: "var(--wp--preset--spacing--30)",
@@ -1761,7 +1761,7 @@ const Landingpage = () => {
                                 </div>
                                 <div className="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
                                     <div
-                                        className="wp-block-group has-tertiary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-a35945ca wp-block-group-is-layout-constrained"
+                                        className="wp-block-group has-secondary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-a35945ca wp-block-group-is-layout-constrained"
                                         style={{
                                             borderRadius: 4,
                                             paddingTop: "var(--wp--preset--spacing--30)",

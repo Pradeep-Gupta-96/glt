@@ -565,7 +565,7 @@ const Portfolio = () => {
                             </div>
                         </div>
                         <div
-                            className="wp-block-group alignfull has-tertiary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-254d6575 wp-block-group-is-layout-constrained"
+                            className="wp-block-group alignfull has-secondary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-254d6575 wp-block-group-is-layout-constrained"
                             id="portfolio"
                             style={{
                                 marginTop: 0,
@@ -918,7 +918,7 @@ const Portfolio = () => {
                                 </div>
                             </div>
                             <div className="wp-block-columns alignwide is-layout-flex wp-container-core-columns-is-layout-87beb0d0 wp-block-columns-is-layout-flex">
-                                <div className="wp-block-column has-tertiary-background-color has-background is-layout-flow wp-block-column-is-layout-flow">
+                                <div className="wp-block-column has-secondary-background-color has-background is-layout-flow wp-block-column-is-layout-flow">
                                     <div
                                         className="wp-block-group has-global-padding is-layout-constrained wp-container-core-group-is-layout-659b56d5 wp-block-group-is-layout-constrained"
                                         style={{
@@ -943,7 +943,7 @@ const Portfolio = () => {
                                         </p>
                                     </div>
                                 </div>
-                                <div className="wp-block-column has-tertiary-background-color has-background is-layout-flow wp-block-column-is-layout-flow">
+                                <div className="wp-block-column has-secondary-background-color has-background is-layout-flow wp-block-column-is-layout-flow">
                                     <div
                                         className="wp-block-group has-global-padding is-layout-constrained wp-container-core-group-is-layout-659b56d5 wp-block-group-is-layout-constrained"
                                         style={{
@@ -968,7 +968,7 @@ const Portfolio = () => {
                                         </p>
                                     </div>
                                 </div>
-                                <div className="wp-block-column has-tertiary-background-color has-background is-layout-flow wp-block-column-is-layout-flow">
+                                <div className="wp-block-column has-secondary-background-color has-background is-layout-flow wp-block-column-is-layout-flow">
                                     <div
                                         className="wp-block-group has-global-padding is-layout-constrained wp-container-core-group-is-layout-659b56d5 wp-block-group-is-layout-constrained"
                                         style={{
@@ -996,7 +996,7 @@ const Portfolio = () => {
                             </div>
                         </div>
                         <div
-                            className="wp-block-group alignfull has-tertiary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-fb85e995 wp-block-group-is-layout-constrained"
+                            className="wp-block-group alignfull has-secondary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-fb85e995 wp-block-group-is-layout-constrained"
                             id="testimonials"
                             style={{
                                 marginTop: 0,

@@ -573,7 +573,7 @@ const Resource = () => {
                             </div>
                         </div>
                         <div
-                            className="wp-block-group alignfull has-tertiary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-7276a2bb wp-block-group-is-layout-constrained"
+                            className="wp-block-group alignfull has-secondary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-7276a2bb wp-block-group-is-layout-constrained"
                             id="resources"
                             style={{
                                 marginTop: 0,
@@ -634,7 +634,7 @@ const Resource = () => {
                                         <div className="wp-block-buttons is-content-justification-left is-layout-flex wp-container-core-buttons-is-layout-fc4fd283 wp-block-buttons-is-layout-flex">
                                             <div className="wp-block-button has-custom-font-size has-small-font-size">
                                                 <Link
-                                                    className="wp-block-button__link wp-element-button"
+                                                    className="wp-block-button__link wp-element-button has-tertiary-background-color"
                                                     to="/contact"
                                                 >
                                                     Find Out More
@@ -680,7 +680,7 @@ const Resource = () => {
                                         <div className="wp-block-buttons is-content-justification-left is-layout-flex wp-container-core-buttons-is-layout-fc4fd283 wp-block-buttons-is-layout-flex">
                                             <div className="wp-block-button has-custom-font-size has-small-font-size">
                                                 <Link
-                                                    className="wp-block-button__link wp-element-button"
+                                                    className="wp-block-button__link wp-element-button has-tertiary-background-color"
                                                     href="contact.hml"
                                                 >
                                                     Get Details
@@ -726,7 +726,7 @@ const Resource = () => {
                                         <div className="wp-block-buttons is-content-justification-left is-layout-flex wp-container-core-buttons-is-layout-fc4fd283 wp-block-buttons-is-layout-flex">
                                             <div className="wp-block-button has-custom-font-size has-small-font-size">
                                                 <Link
-                                                    className="wp-block-button__link wp-element-button"
+                                                    className="wp-block-button__link wp-element-button has-tertiary-background-color"
                                                     to="/contact"
                                                 >
                                                     Read More
@@ -858,7 +858,7 @@ const Resource = () => {
                             </div>
                         </div>
                         <div
-                            className="wp-block-group alignfull has-tertiary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-7276a2bb wp-block-group-is-layout-constrained"
+                            className="wp-block-group alignfull has-secondary-background-color has-background has-global-padding is-layout-constrained wp-container-core-group-is-layout-7276a2bb wp-block-group-is-layout-constrained"
                             style={{
                                 marginTop: 0,
                                 marginBottom: 0,
@@ -882,7 +882,7 @@ const Resource = () => {
                                 <div className="wp-block-buttons is-horizontal is-content-justification-right is-layout-flex wp-container-core-buttons-is-layout-27c00227 wp-block-buttons-is-layout-flex">
                                     <div className="wp-block-button">
                                         <Link
-                                            className="wp-block-button__link wp-element-button"
+                                            className="wp-block-button__link wp-element-button has-tertiary-background-color"
                                             to="/service"
                                         >
                                             Learn More
