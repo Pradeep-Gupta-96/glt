@@ -71,7 +71,7 @@ const Admin = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             style={{
-              width: "100%",
+              width: "90%",
               padding: "10px",
               border: "1px solid #ccc",
               borderRadius: "6px",
