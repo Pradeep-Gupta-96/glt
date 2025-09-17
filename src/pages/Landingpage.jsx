@@ -795,7 +795,7 @@ const Landingpage = () => {
                 backgroundColor: "#008A00",
               }}
             >
-              Agreement Fee: ₹3,250/-
+              Agreement Fee: ₹4,500/-
             </p>
           </header>
           <main
