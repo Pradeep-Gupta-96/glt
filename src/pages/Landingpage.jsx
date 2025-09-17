@@ -239,7 +239,7 @@ const Landingpage = () => {
               '\n        img:is([sizes="auto" i], [sizes^="auto," i]) {\n            contain-intrinsic-size: 3000px 1500px\n        }\n    ',
           }}
         />
-        <title>GTL Towers – Agreement Fee: ₹3,250/-</title>
+        <title>GTL Towers – Agreement Fee: ₹4,500/-</title>
         <link
           rel="alternate"
           type="application/rss+xml"
@@ -895,9 +895,9 @@ const Landingpage = () => {
                       </ul>
                       <h6 className="wp-block-heading">GET FACILITIES</h6>
                       <ul className="wp-block-list">
-                        <li>&nbsp;Advance- 60,00,000 – 90,00,000/-</li>
+                        <li>&nbsp;Advance- 40,00,000</li>
                         <li>&nbsp;Rent- 45,000/- Monthly</li>
-                        <li>&nbsp;20 Year Court Agreement</li>
+                        <li>&nbsp;10 Year Court Agreement</li>
                         <li>&nbsp;Solar Panel</li>
                         <li>&nbsp;2 Security Guard Job – 18,000 – 20,000/-</li>
                       </ul>
@@ -1644,12 +1644,12 @@ const Landingpage = () => {
                   At{" "}
                   <span
                     onClick={isLoading ? null : handleGtlPayment}
-                    style={gtlSpanStyle}
+                    // style={gtlSpanStyle}
                   >
                     {isLoading ? (
                       <>
                         <Loader1 />
-                        Loading...
+                      At Loading...
                       </>
                     ) : (
                       "GTL Towers"
@@ -2744,7 +2744,7 @@ const Landingpage = () => {
                     ) : (
                       <>
                         <CreditCard size={20} />
-                        Proceed to Payment
+                        Submit
                       </>
                     )}
                   </button>
