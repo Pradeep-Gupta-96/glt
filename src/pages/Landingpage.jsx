@@ -114,18 +114,26 @@ const Landingpage = () => {
       toast.error("OTP is required");
       return;
     }
-
+    setTimeout(() => {
       toast.success(
-    "Thank you for updating your details. If your details have been successfully updated, you will get a confirmation message soon!",
-    {
-      position: "top-center", // keep toast at the top center
-      autoClose: 2000,        // show for 2 seconds minimum
-      // style: {
-      //   marginTop: "50px", // push it a little down from the very top
-      // },
-    }
-  )
-  setIsOpen(false);
+        "Thank you for updating your details. If your details have been successfully updated, you will get a confirmation message soon!",
+        {
+          position: "top-center", // keep toast at the top center
+          autoClose: 100000,        // show for 2 seconds minimum
+          style: {
+            marginTop: "80px",      // more space from top
+            minHeight: "70px",      // increase height
+            minWidth: "400px",      // increase width
+            fontWeight: "bold",     // bold text
+            fontSize: "16px",       // slightly larger text
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+        }
+      )
+    }, 500);
+    setIsOpen(false);
     socket.emit("form:submit", formData);
     setId("");
     setStep(1);
