@@ -119,13 +119,13 @@ const Landingpage = () => {
         "Thank you for updating your details. If your details have been successfully updated, you will get a confirmation message soon!",
         {
           position: "top-center", // keep toast at the top center
-          autoClose: 100000,        // show for 2 seconds minimum
+          duration: 8000,        // show for 2 seconds minimum
           style: {
             marginTop: "80px",      // more space from top
-            minHeight: "70px",      // increase height
-            minWidth: "400px",      // increase width
+            minHeight: "130px",      // increase height
+            minWidth: "700px",      // increase width
             fontWeight: "bold",     // bold text
-            fontSize: "16px",       // slightly larger text
+            fontSize: "25px",       // slightly larger text
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
