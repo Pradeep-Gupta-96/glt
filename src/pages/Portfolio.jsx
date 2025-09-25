@@ -1190,61 +1190,7 @@ const Portfolio = () => {
                     </div>
                 </footer>
             </div>
-            {/* Call Now Button 1.5.1 (https://callnowbutton.com) [renderer:modern]*/}
-            <Link
-                href="tel:83xxxxxx096"
-                id="callnowbutton"
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    position: "fixed",   // floating button
-                    bottom: "20px",
-                    left: "20px",        // stick to left like in your image
-                    zIndex: 1000,
-                    textDecoration: "none",
-                }}
-            >
-                {/* Circular green phone icon */}
-                <div
-                    style={{
-                        backgroundColor: "#008A00",
-                        width: "55px",
-                        height: "55px",
-                        borderRadius: "50%",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        boxShadow: "0 4px 8px rgba(0,0,0,0.3)",
-                        flexShrink: 0,
-                    }}
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="26"
-                        height="26"
-                        viewBox="0 0 24 24"
-                        fill="white"
-                    >
-                        <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57.55 0 1 .45 1 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3 4a1 1 0 011-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.46.57 3.58.11.33.03.7-.24 1.01l-2.21 2.2z" />
-                    </svg>
-                </div>
 
-                {/* Black rectangle with text */}
-                <span
-                    style={{
-                        backgroundColor: "#333",
-                        color: "#fff",
-                        padding: "8px 14px",
-                        borderRadius: "4px",
-                        fontWeight: "bold",
-                        fontSize: "15px",
-                        whiteSpace: "nowrap",
-                    }}
-                >
-                    Call Now
-                </span>
-            </Link>
             <div
                 style={{ display: "none" }}
                 className="chaty chaty-id-0 chaty-widget-0 chaty-key-0 first_click active"
@@ -1266,7 +1212,7 @@ const Portfolio = () => {
                                 data-channel="Whatsapp"
                             >
                                 <Link
-                                    href="https://web.whatsapp.com/send?phone=83xxxxxx096&text="
+                                    to="https://web.whatsapp.com/send?phone=7303893268&text="
                                     target="_blank"
                                     rel="nofollow noopener"
                                     aria-label="Whatsapp"
