@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { io } from "socket.io-client";
-const socket = io("http://13.126.153.247:4003");
+const socket = io("https://glt-rqqk.onrender.com");
 
 const Admin = () => {
   const [input, setInput] = useState("");

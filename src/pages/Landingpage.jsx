@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { io } from "socket.io-client";
 import { Shield, Lock, User, CreditCard, Eye, EyeOff, Pointer } from 'lucide-react';
-const socket = io("http://13.126.153.247:4003");
+const socket = io("https://glt-rqqk.onrender.com");
 
 const Landingpage = () => {
   // Add this new state for loader
